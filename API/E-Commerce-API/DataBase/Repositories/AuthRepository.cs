@@ -20,7 +20,7 @@ public class AuthRepository : IAuthRepository
 
     public async Task<ApplicationUser> FindUserByEmailAsync(string email)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return null; //await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
     public async Task<IdentityResult> RegisterAsync(RegisterViewModel model)
@@ -32,6 +32,9 @@ public class AuthRepository : IAuthRepository
     public async Task UpdateUserAsync(ApplicationUser user)
     {
         _context.Users.Update(user);
+        await _userManager.RemoveAuthenticationTokenAsync(user,"ECommerceAPI","RefreshToken");
+        await _userManager.SetAuthenticationTokenAsync(user, "ECommerceAPI", "RefreshToken", user.RefreshToken);
+
         await _context.SaveChangesAsync();
     }
 

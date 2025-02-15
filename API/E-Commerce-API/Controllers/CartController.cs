@@ -1,10 +1,12 @@
 using ECommerceAPI.Services;
 using ECommerceAPI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceAPI.Controllers;
 
-  [Route("api/[controller]")]
+    // [Authorize(AuthenticationSchemes = "Bearer")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CartController : ControllerBase
     {
@@ -22,16 +24,16 @@ namespace ECommerceAPI.Controllers;
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddToCart([FromBody] CartDto dto)
+        public async Task<IActionResult> AddToCart([FromBody] AddCartDto dto)
         {
             await _cartService.AddToCartAsync(dto.UserId, dto.ProductId, dto.Quantity);
             return Ok(new { message = "Product added to cart" });
         }
 
         [HttpDelete("remove")]
-        public async Task<IActionResult> RemoveFromCart([FromQuery] string userId, int productId)
+        public async Task<IActionResult> RemoveFromCart([FromQuery] string userId, int productId,int? quantity)
         {
-            await _cartService.RemoveFromCartAsync(userId, productId);
+            await _cartService.RemoveFromCartAsync(userId, productId,quantity);
             return Ok(new { message = "Product removed from cart" });
         }
 

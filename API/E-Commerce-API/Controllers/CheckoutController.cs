@@ -1,8 +1,10 @@
 using ECommerceAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceAPI.Controllers;
 
+[Authorize(AuthenticationSchemes = "Bearer")]
 [Route("api/[controller]")]
 [ApiController]
 public class CheckoutController :ControllerBase
@@ -13,7 +15,8 @@ public class CheckoutController :ControllerBase
         _checkoutService = checkoutService;
     }
 
-    [HttpGet("preview/{userId}")]
+    [HttpGet]
+    [Route("preview/{userId}")]
     public async Task<IActionResult> GetCheckoutPreview(string userId)
     {
         var preview = await _checkoutService.GetCheckoutPreviewAsync(userId);

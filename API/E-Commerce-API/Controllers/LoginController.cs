@@ -19,7 +19,7 @@ public class LoginController : ControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
     {
         var result = await _authService.RegisterAsync(model);
-        return Ok(new { message = result });
+        return Ok(new { message = "result" });
     }
 
     [HttpPost("login")]
@@ -33,9 +33,9 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("refresh")]
-    public async Task<IActionResult> RefreshToken([FromBody] RefreshRequestModel model)
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshRequestDto model)
     {
-        var result = await _authService.RefreshTokenAsync(model.RefreshToken);
+        var result = await _authService.RefreshTokenAsync(model);
         if (result == null)
             return Unauthorized(new { message = "Invalid refresh token" });
 

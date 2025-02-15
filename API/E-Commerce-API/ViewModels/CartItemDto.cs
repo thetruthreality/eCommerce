@@ -19,10 +19,4 @@ public class CartItemDto
     public decimal Price { get; set; }
 
     public decimal TotalPrice => Price * Quantity;
-
-    [Required]
-    public int CartId { get; set; }
-
-    [ForeignKey("CartId")]
-    public CartDto Cart { get; set; }
 }

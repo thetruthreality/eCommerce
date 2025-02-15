@@ -23,16 +23,18 @@ public class CartRepository : ICartRepository
         }
 
         var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
+        var Productinfo= await _context.Products.Select(x=>new {x.Id,x.Price}).SingleAsync(ci => ci.Id == productId);
         if (cartItem != null)
         {
             cartItem.Quantity += quantity;
+            cart.TotalPrice+= quantity * Productinfo.Price;
         }
         else
         {
             cart.CartItems.Add(new CartItem { ProductId = productId, Quantity = quantity, CartId = cart.Id });
-        }
+            cart.TotalPrice+= quantity * Productinfo.Price;
 
-        cart.TotalPrice = await GetCartTotalPriceAsync(userId);
+         }
         await _context.SaveChangesAsync();
     }
 
@@ -61,16 +63,24 @@ public class CartRepository : ICartRepository
         return cart.CartItems.Sum(ci => ci.Product.Price * ci.Quantity);
     }
 
-    public async Task RemoveFromCartAsync(string userId, int productId)
+    public async Task RemoveFromCartAsync(string userId, int productId,int? quantity)
     {
         var cart = await GetCartByUserIdAsync(userId);
         if (cart == null) return;
 
         var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
         if (cartItem != null)
-        {
+        { 
+            var Productinfo= await _context.Products.Select(x=>new {x.Id,x.Price}).SingleAsync(ci => ci.Id == productId);
+
+            if(quantity >0) {
+                cart.CartItems.Single(x=>x.ProductId==productId).Quantity-= quantity?? 0;
+                cart.TotalPrice-= ((int)quantity *Productinfo.Price);
+            }
+            else{
             cart.CartItems.Remove(cartItem);
-            cart.TotalPrice = await GetCartTotalPriceAsync(userId);
+            cart.TotalPrice -= cartItem.Quantity* Productinfo.Price;
+            }
             await _context.SaveChangesAsync();
         }
     }

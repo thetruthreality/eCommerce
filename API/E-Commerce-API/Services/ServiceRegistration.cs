@@ -1,4 +1,6 @@
 
+using ECommerceAPI.ViewModels;
+
 namespace ECommerceAPI.Services;
 
 public static class ServiceRegistration
@@ -8,6 +10,8 @@ public static class ServiceRegistration
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICheckoutService, CheckoutService>();
+            services.AddScoped<ITokenService,TokenService>();
+            services.AddScoped<ICartService,CartService>();
             return services;
     }
 }

@@ -16,5 +16,5 @@ public class Order
 
         public string Status { get; set; } = "Pending"; // Pending, Completed, Cancelled
 
-        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        public IList<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }

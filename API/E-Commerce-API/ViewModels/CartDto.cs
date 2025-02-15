@@ -11,9 +11,5 @@ public class CartDto
 
     public ICollection<CartItemDto> CartItems { get; set; } = new List<CartItemDto>();
 
-    public int ProductId { get; set; }
-
-    public int Quantity { get; set; }
-
     public decimal TotalPrice { get; set; } = 0;
 }

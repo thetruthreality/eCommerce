@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using ECommerceAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ECommerceAPI.Controllers;
-
-[Route("api/[controller]")]
+[Authorize(AuthenticationSchemes = "Bearer")]
+[Route("api/order")]
 [ApiController]
+
  public class OrderController : ControllerBase
 {
     private readonly IOrderService _orderService;
@@ -14,7 +16,8 @@ namespace ECommerceAPI.Controllers;
         _orderService = orderService;
     }
 
-    [HttpPost("checkout/{userId}")]
+    [HttpPost]
+    [Route("checkout/{userId}")]
     public async Task<IActionResult> Checkout(string userId)
     {
         var order = await _orderService.CreateOrderAsync(userId);

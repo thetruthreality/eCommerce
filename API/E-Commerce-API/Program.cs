@@ -1,5 +1,6 @@
 using System.Text;
 using ECommerceAPI.Database;
+using ECommerceAPI.DataBase.Models;
 using ECommerceAPI.Repositories;
 using ECommerceAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -26,7 +27,20 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
-// Add Authentication with JWT Bearer Token
+// Configure JWT settings from appsettings.json
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddAuthorization();    
+builder.Services.AddControllers();
+builder.Services.AddMemoryCache();
+
+// Register application services (Repositories & Services)
+builder.Services.AddServices();
+builder.Services.AddRepositories();
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -36,21 +50,30 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-            ValidAudience = builder.Configuration["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(secretKey)
         };
     });
-
-
+ // Add CORS service
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+        builder.AllowAnyOrigin()    // Allow any origin
+            .AllowAnyMethod()    // Allow any HTTP method (GET, POST, etc.)
+            .AllowAnyHeader());  // Allow any header
+        });
+// Add Authentication with JWT Bearer Token
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        In = ParameterLocation.Header,
-        Description = "Please enter the JWT token",
         Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] followed by the token"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -70,15 +93,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddAuthorization();    
-builder.Services.AddControllers();
-builder.Services.AddMemoryCache();
 
-// Register application services (Repositories & Services)
-builder.Services.AddServices();
-builder.Services.AddRepositories();
 
 var app = builder.Build();
 
@@ -88,6 +103,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
