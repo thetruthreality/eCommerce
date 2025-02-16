@@ -1,1 +1,44 @@
-<h4>View Component</h4>
+<!-- <div class="container">
+    <h2>Product List</h2>
+    <div *ngIf="products.length > 0; else noProducts">
+      <div class="product-grid">
+        <div *ngFor="let product of products" class="product-card">
+          <img [src]="product.imageUrl" alt="{{ product.name }}">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <p><strong>Price:</strong> ${{ product.price }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #noProducts>
+      <p>No products available.</p>
+    </ng-template>
+  </div>
+   -->
+
+   <div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Product List</h2>
+  
+    <div *ngIf="products.length > 0; else noProducts">
+      <div class="row">
+        <div *ngFor="let product of products" class="col-md-4 col-lg-3 mb-4">
+          <div class="card h-100 shadow" (click)="viewProductDetails(product)">
+            <img [src]="product.imageUrl" class="card-img-top product-img" alt="{{ product.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text text-muted">{{ product.description }}</p>
+              <p class="fw-bold text-success">Price: ${{ product.price }}</p>
+              <p class="">Available In Stock: {{product.stockQuantity}}</p>
+              <button class="btn btn-primary w-100">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noProducts>
+      <p class="text-center text-danger">No products available.</p>
+    </ng-template>
+  </div>
+  

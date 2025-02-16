@@ -37,7 +37,7 @@ public class AuthService : IAuthService
         var accessToken = await _tokenService.GenerateAccessToken(user);
         var refreshToken = await _tokenService.GenerateRefreshToken(user);
 
-        return new AuthResponseViewModel { Token = accessToken, RefreshToken = refreshToken };
+        return new AuthResponseViewModel { Token = accessToken, RefreshToken = refreshToken, UserId= user.Id };
 
     }
 

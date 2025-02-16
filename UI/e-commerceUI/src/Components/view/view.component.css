@@ -1,0 +1,9 @@
+.card img {
+    height: 200px; /* Fixed height for consistency */
+    object-fit: cover; /* Ensures images look good */
+  }
+  .product-img {
+    height: 150px; /* Adjust for small images */
+    object-fit: cover;
+  }
+    

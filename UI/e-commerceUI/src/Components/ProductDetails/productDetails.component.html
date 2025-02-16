@@ -1,0 +1,30 @@
+
+<h2>Product Details</h2>
+<div class="container mt-5">
+    <div class="card shadow">
+      <div class="row g-0">
+        <div class="col-md-4 text-center">
+          <img [src]="product.imageUrl" class="img-fluid rounded-start product-detail-img" alt="{{ product.name }}">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h3 class="card-title">{{ product.name }}</h3>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="fw-bold text-success">Price: ${{ product.price }}</p>
+            <p class="text-muted">Available Quantity: {{ product.stockQuantity }}</p>
+  
+            <!-- Quantity Selector -->
+            <div class="d-flex align-items-center mb-3">
+              <button class="btn btn-outline-secondary me-2" (click)="decreaseQuantity()">-</button>
+              <input type="number"  [(ngModel)]="quantity" class="form-control text-center w-25" min="1" [max]="product.availableQuantity">
+              <button class="btn btn-outline-secondary ms-2" (click)="increaseQuantity()">+</button>
+            </div>
+  
+            <!-- Add to Cart Button -->
+            <button class="btn btn-primary w-100" (click)="addToCart()">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

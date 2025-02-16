@@ -3,11 +3,14 @@ import { AppComponent } from "./app.component";
 import { NgModule } from "@angular/core";
 import { LoginComponent } from "../Components/Login/login.component";
 import { ViewComponent } from "../Components/view/view.component";
+import { AuthGuard } from "../services/AuthGuard";
+import { ProductDetailsComponent } from "../Components/ProductDetails/productDetails.component";
 
 const routes: Routes = [
     {path:'',redirectTo:'login',pathMatch: 'full'},
     {path:'login',component:LoginComponent},
-    {path:'views',component:ViewComponent}
+    {path:'views',component:ViewComponent,canActivate:[AuthGuard]},
+    { path: "product-details/:id", component: ProductDetailsComponent }
     
   ];
   @NgModule({
