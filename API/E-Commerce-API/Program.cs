@@ -39,6 +39,8 @@ builder.Services.AddMemoryCache();
 builder.Services.AddServices();
 builder.Services.AddRepositories();
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
 var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

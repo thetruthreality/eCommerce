@@ -1,6 +1,8 @@
 
+using AutoMapper;
 using ECommerceAPI.Database;
 using ECommerceAPI.DataBase.Models;
+using ECommerceAPI.DataBase.Repositories;
 using ECommerceAPI.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,16 +13,20 @@ public class AuthRepository : IAuthRepository
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ApplicationDbContext _context;
-
-    public AuthRepository(UserManager<IdentityUser> userManager,ApplicationDbContext context)
+    private IMapper _mapper;    
+    public AuthRepository(UserManager<IdentityUser> userManager,
+    IMapper mapper,
+    ApplicationDbContext context)
     {
         _userManager = userManager;
-        _context = context;
+        _context = context;  
+        _mapper = mapper;
     }
 
-    public async Task<ApplicationUser> FindUserByEmailAsync(string email)
+    public async Task<UserInfoDto> FindUserByEmailAsync(string email)
     {
-        return null; //await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return _mapper.Map<UserInfoDto>( 
+            await _context.Users.FirstOrDefaultAsync(u => u.Email == email));
     }
 
     public async Task<IdentityResult> RegisterAsync(RegisterViewModel model)
@@ -32,9 +38,6 @@ public class AuthRepository : IAuthRepository
     public async Task UpdateUserAsync(ApplicationUser user)
     {
         _context.Users.Update(user);
-        await _userManager.RemoveAuthenticationTokenAsync(user,"ECommerceAPI","RefreshToken");
-        await _userManager.SetAuthenticationTokenAsync(user, "ECommerceAPI", "RefreshToken", user.RefreshToken);
-
         await _context.SaveChangesAsync();
     }
 

@@ -27,7 +27,7 @@ public class OrderRepository : IOrderRepository
             {
                 UserId = userId,
                 TotalAmount = cart.CartItems.Sum(ci => ci.Product.Price * ci.Quantity),
-                Status = "Pending"
+                Status = "PaymentDone"
             };
             //after order done ,total price of cart will be zero
             //becuase no item in cart
