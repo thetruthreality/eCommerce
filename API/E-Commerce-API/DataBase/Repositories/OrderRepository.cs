@@ -29,6 +29,9 @@ public class OrderRepository : IOrderRepository
                 TotalAmount = cart.CartItems.Sum(ci => ci.Product.Price * ci.Quantity),
                 Status = "Pending"
             };
+            //after order done ,total price of cart will be zero
+            //becuase no item in cart
+            cart.TotalPrice=0;
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();

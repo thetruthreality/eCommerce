@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { AddCartDto } from "../Dtos/AddCartDto";
+import { CartDto } from "../Dtos/CartDto";
 
 @Injectable({
   providedIn: "root", // Makes it available throughout the app
@@ -21,8 +22,9 @@ export class CartService {
   }
 
   // ✅ Get cart items by user ID
-  getCartItems(userId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${userId}`);
+  getCartItems(): Observable<CartDto> {
+    let userId = localStorage.getItem("userId");
+    return this.http.get<CartDto>(`${this.baseUrl}/${userId}`);
   }
 
   // ✅ Remove item from cart

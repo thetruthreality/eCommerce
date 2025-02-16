@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ProductService } from "../../services/ProductService";
 import { CartService } from "../../services/CartService";
 import { AddCartDto } from "../../Dtos/AddCartDto";
@@ -17,6 +17,7 @@ export class ProductDetailsComponent{
 
   constructor(private route: ActivatedRoute,
     private productService: ProductService,
+    private router: Router,
     private cartService: CartService) {}
 
   ngOnInit(): void {
@@ -54,12 +55,8 @@ export class ProductDetailsComponent{
     };
     cartItem.userId = localStorage.getItem("userId") || null;
     this.cartService.addToCart(cartItem).subscribe((data: any) => {
-      console.log("suucess");
+      this.router.navigate(['/myCart']); 
     });
 
-    // Call Add to Cart API
-    // this.http.post("http://localhost:5000/api/cart", cartItem).subscribe(response => {
-    //   alert("Product added to cart successfully!");
-    // });
   }
 }

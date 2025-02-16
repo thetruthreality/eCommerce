@@ -5,15 +5,17 @@ namespace ECommerceAPI.Services;
 public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-
-        public OrderService(IOrderRepository orderRepository)
+        private readonly IProductRepository  _productRepository;
+        public OrderService(IOrderRepository orderRepository,
+        IProductRepository  productRepository)
         {
             _orderRepository = orderRepository;
+            _productRepository = productRepository;
         }
 
         public async Task<OrderDto> CreateOrderAsync(string userId)
         {
-            var order = await _orderRepository.CreateOrderAsync(userId);
+            var order = await _orderRepository.CreateOrderAsync(userId);            
             return new OrderDto
             {
                 Id = order.Id,

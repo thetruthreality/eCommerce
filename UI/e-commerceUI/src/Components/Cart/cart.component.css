@@ -1,0 +1,9 @@
+.card {
+    border-radius: 10px;
+  }
+  
+  .card img {
+    max-width: 100%;
+    height: auto;
+  }
+  
