@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using ECommerceAPI.Services;
 using ECommerceAPI.ViewModels;
 using System.Security.Claims;
+using System.Threading.Tasks;
 namespace ECommerceAPI.Controllers;
 
 [Route("api/auth")]
@@ -10,9 +11,13 @@ namespace ECommerceAPI.Controllers;
 public class LoginController : ControllerBase
 {
     private readonly IAuthService _authService;   
-     public LoginController(IAuthService authService)
+    private readonly IUserService _userService;
+     public LoginController(IAuthService authService,
+     IUserService userService
+     )
     {
         _authService = authService;
+        _userService = userService;
     }
 
     [HttpPost("register")]
@@ -32,6 +37,18 @@ public class LoginController : ControllerBase
     return Ok(result);
     }
 
+        [HttpPost("logout")]
+    public async Task<IActionResult> Logout([FromBody] LogoutDto model)
+    {
+      var result = await _authService.LogOutAsync(model);
+      if (result == null)
+        return Unauthorized(new { message = "Invalid email or password" });
+
+    return Ok(result);
+    }
+
+
+
     [HttpPost("refresh")]
     public async Task<IActionResult> RefreshToken([FromBody] RefreshRequestDto model)
     {
@@ -42,12 +59,12 @@ public class LoginController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]  
     [HttpGet("user")]
-    public IActionResult GetCurrentUser()
+    public async Task<IActionResult> GetCurrentUser()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        return Ok(new { userId });
+       return Ok( await _userService.GetUserInformation(userId));
     }
     
 }

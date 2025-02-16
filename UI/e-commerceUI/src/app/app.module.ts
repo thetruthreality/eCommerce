@@ -9,14 +9,16 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { AuthInterceptor } from "../services/AuthInterceptor";
 import { ProductDetailsComponent } from "../Components/ProductDetails/productDetails.component";
 import { MyCartComponent } from "../Components/Cart/Cart.component";
+import { HeaderComponent } from "../Components/Header/header.component";
 
 @NgModule({
     declarations:[
+        HeaderComponent,
         AppComponent,
         LoginComponent,
         ViewComponent,
         ProductDetailsComponent,
-        MyCartComponent
+        MyCartComponent,
     ],
     imports :[
         BrowserModule,

@@ -48,11 +48,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuer = true,
             ValidateAudience = true,
-            ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidIssuer = jwtSettings["Issuer"],
             ValidAudience = jwtSettings["Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(secretKey)
+            IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+             ValidateLifetime = true, // Ensures token expiration is enforced
+            ClockSkew = TimeSpan.Zero
         };
     });
  // Add CORS service

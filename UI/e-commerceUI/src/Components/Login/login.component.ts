@@ -22,7 +22,6 @@ export class LoginComponent {
         localStorage.setItem('token', response.token);
         localStorage.setItem('refreshToken',response.refreshToken)
         localStorage.setItem('userId',response.userId);
-        console.log("run")
         this.router.navigate(['/views']); // Redirect to view page
       }
     }, error => {

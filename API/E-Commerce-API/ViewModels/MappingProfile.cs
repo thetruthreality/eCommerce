@@ -4,6 +4,7 @@
 using AutoMapper;
 using ECommerceAPI.DataBase.Models;
 using ECommerceAPI.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 public class MappingProfile : Profile
 {
@@ -15,6 +16,8 @@ public class MappingProfile : Profile
         .ForMember(dest=>dest.Price,opt=>opt.MapFrom(p=>p.Product.Price))
         .ForMember(dest=>dest.ImageUrl,opt=>opt.MapFrom(p=>p.Product.ImageUrl))
         .ForMember(dest=>dest.TotalPrice,opt=>opt.MapFrom(p=>p.Product.Price * p.Quantity));
+
+        CreateMap<IdentityUser,UserInfoDto>();
         
     }
 }

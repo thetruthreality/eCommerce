@@ -1,11 +1,12 @@
 using ECommerceAPI.Services;
 using ECommerceAPI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceAPI.Controllers;
 
  [Route("api/[controller]")]
-    [ApiController]
+ [ApiController]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;

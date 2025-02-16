@@ -13,6 +13,7 @@ public static class ServiceRegistration
             services.AddScoped<ITokenService,TokenService>();
             services.AddScoped<ICartService,CartService>();
             services.AddScoped<IOrderService,OrderService>();
+            services.AddScoped<IUserService,UserService>();
             return services;
     }
 }
