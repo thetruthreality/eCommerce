@@ -19,9 +19,7 @@ export class LoginComponent {
 
       if (response.token) {
 
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('refreshToken',response.refreshToken)
-        localStorage.setItem('userId',response.userId);
+       this.authService.setToken(response)
         this.router.navigate(['/views']); // Redirect to view page
       }
     }, error => {

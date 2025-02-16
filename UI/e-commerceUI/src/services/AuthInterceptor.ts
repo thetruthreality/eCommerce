@@ -3,13 +3,16 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse, HttpEvent
 import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError } from 'rxjs';
 import { AuthService } from './AuthService';
 import { AuthResponseDto } from '../Dtos/AuthResponseDto';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+    private router: Router
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler)
   {
@@ -18,17 +21,15 @@ export class AuthInterceptor implements HttpInterceptor {
     if (token) {
       authReq = this.addToken(req, token);
     }
-    // if (token) {
-    //   const cloned = req.clone({
-    //     setHeaders: { Authorization: `Bearer ${token}` }
-    //   });
-    //   return next.handle(cloned);
-    // }
-    // return next.handle(req);
+    
     return next.handle(authReq).pipe(
       catchError((error:HttpErrorResponse)=>{
         if(error.status ==401)
         {
+          if (req.url.includes('/api/auth/user')) {
+            console.warn('User info API failed, skipping refresh token.');
+            return throwError(() => error);
+          }
           return this.handle401Error(authReq,next)
         }
         return throwError(() => error);
@@ -57,6 +58,7 @@ export class AuthInterceptor implements HttpInterceptor {
         catchError((err) => {
           this.isRefreshing = false;
           this.authService.logout(); // Logout user if refresh fails
+          this.router.navigate(['/login']);
           return throwError(() => err);
         })
       );
