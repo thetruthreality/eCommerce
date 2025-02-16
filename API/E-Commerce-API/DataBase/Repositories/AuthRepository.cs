@@ -3,7 +3,7 @@ using AutoMapper;
 using ECommerceAPI.Database;
 using ECommerceAPI.DataBase.Models;
 using ECommerceAPI.DataBase.Repositories;
-using ECommerceAPI.ViewModels;
+using ECommerceAPI.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

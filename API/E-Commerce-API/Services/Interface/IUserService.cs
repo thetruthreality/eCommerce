@@ -1,4 +1,4 @@
-using ECommerceAPI.ViewModels;
+using ECommerceAPI.DTOs;
 using Microsoft.AspNetCore.Identity;
 
 namespace ECommerceAPI.Services;

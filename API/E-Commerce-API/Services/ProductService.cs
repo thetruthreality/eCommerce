@@ -1,7 +1,7 @@
 using AutoMapper;
 using ECommerceAPI.DataBase.Models;
 using ECommerceAPI.DataBase.Repositories;
-using ECommerceAPI.ViewModels;
+using ECommerceAPI.DTOs;
 
 namespace ECommerceAPI.Services;
 

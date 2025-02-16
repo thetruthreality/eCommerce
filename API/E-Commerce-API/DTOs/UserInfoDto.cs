@@ -1,4 +1,4 @@
-namespace ECommerceAPI.ViewModels;
+namespace ECommerceAPI.DTOs;
 public class UserInfoDto
 {
     public string UserName { get; set;}

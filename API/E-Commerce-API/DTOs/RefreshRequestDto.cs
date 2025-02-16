@@ -1,6 +1,6 @@
 using Microsoft.Identity.Client;
 
-namespace ECommerceAPI.ViewModels;
+namespace ECommerceAPI.DTOs;
 
 public class RefreshRequestDto
 {

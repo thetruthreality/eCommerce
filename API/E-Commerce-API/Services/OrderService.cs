@@ -1,5 +1,5 @@
 using ECommerceAPI.DataBase.Repositories;
-using ECommerceAPI.ViewModels;
+using ECommerceAPI.DTOs;
 
 namespace ECommerceAPI.Services;
 public class OrderService : IOrderService

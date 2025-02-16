@@ -1,5 +1,5 @@
+using ECommerceAPI.DTOs;
 using ECommerceAPI.Services;
-using ECommerceAPI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

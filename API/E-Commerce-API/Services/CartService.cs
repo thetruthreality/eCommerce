@@ -1,8 +1,9 @@
 using AutoMapper;
 using ECommerceAPI.DataBase.Repositories;
+using ECommerceAPI.DTOs;
 using ECommerceAPI.Services;
 
-namespace ECommerceAPI.ViewModels;
+namespace ECommerceAPI.Services;
 
 public class CartService : ICartService
 {

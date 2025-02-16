@@ -1,5 +1,5 @@
 
-namespace ECommerceAPI.ViewModels;
+namespace ECommerceAPI.DTOs;
 
 public class LogoutDto
 {

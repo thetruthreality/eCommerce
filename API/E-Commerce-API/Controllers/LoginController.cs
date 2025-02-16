@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ECommerceAPI.Services;
-using ECommerceAPI.ViewModels;
 using System.Security.Claims;
-using System.Threading.Tasks;
+using ECommerceAPI.DTOs;
 namespace ECommerceAPI.Controllers;
 
 [Route("api/auth")]

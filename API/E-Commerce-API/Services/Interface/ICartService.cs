@@ -1,4 +1,4 @@
-using ECommerceAPI.ViewModels;
+using ECommerceAPI.DTOs;
 
 namespace ECommerceAPI.Services;
 

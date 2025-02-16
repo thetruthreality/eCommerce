@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ECommerceAPI.ViewModels;
+namespace ECommerceAPI.DTOs;
 
 public class CartItemDto
 {
