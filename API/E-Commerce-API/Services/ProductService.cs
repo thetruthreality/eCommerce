@@ -2,17 +2,20 @@ using AutoMapper;
 using ECommerceAPI.DataBase.Models;
 using ECommerceAPI.DataBase.Repositories;
 using ECommerceAPI.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceAPI.Services;
 
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
+    private readonly IRepository<Product> _giftRepository;
     private readonly IMapper _mapper;
-    public ProductService(IProductRepository productRepository, IMapper mapper)
+    public ProductService(IProductRepository productRepository, IMapper mapper,IRepository<Product> giftRepository)
     {
         _productRepository = productRepository;
         _mapper = mapper;
+        _giftRepository = giftRepository;
     }
 
     public async Task AddProductAsync(ProductDto productDto)
@@ -29,6 +32,8 @@ public class ProductService : IProductService
     public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
     {
         var products = await _productRepository.GetAllProductsAsync();
+        var s= await _giftRepository.GetAll().ToListAsync();
+
         return _mapper.Map<IEnumerable<ProductDto>>(products);
     }   
 

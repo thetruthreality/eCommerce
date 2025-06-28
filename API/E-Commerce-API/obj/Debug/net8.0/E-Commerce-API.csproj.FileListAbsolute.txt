@@ -79,3 +79,5 @@
 /Users/ayshashaikh/Ecommerce/eCommerce/API/E-Commerce-API/obj/Debug/net8.0/E-Commerce-API.pdb
 /Users/ayshashaikh/Ecommerce/eCommerce/API/E-Commerce-API/obj/Debug/net8.0/E-Commerce-API.genruntimeconfig.cache
 /Users/ayshashaikh/Ecommerce/eCommerce/API/E-Commerce-API/obj/Debug/net8.0/ref/E-Commerce-API.dll
+/Users/ayshashaikh/Ecommerce/eCommerce/API/E-Commerce-API/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/ayshashaikh/Ecommerce/eCommerce/API/E-Commerce-API/bin/Debug/net8.0/Scrutor.dll
